@@ -24,7 +24,7 @@ int main() {
 	}
 
 	sockaddr_in enderecoServidor;
-	enderecoServidor.sin_addr.s_addr = inet_addr("127.0.0.1");		//IP do Servidor
+	enderecoServidor.sin_addr.s_addr = inet_addr("0.0.0.0");		//IP do Servidor
 	enderecoServidor.sin_family = AF_INET;							//IPV4
 	enderecoServidor.sin_port = htons(9999);						//Porta do Servidor
 
@@ -57,10 +57,12 @@ int main() {
 
 	SOCKET clienteSocket;
 	sockaddr_in clienteEndereco;
-	int clienteEnderecoTam;
+	int clienteEnderecoTam = sizeof(clienteEndereco);
 
 	while (true) {
 		clienteSocket = accept(principalSocket, (SOCKADDR *) &clienteEndereco, &clienteEnderecoTam);
+
+		std::cout << "Clente Conectado" << std::endl;
 	}
 
 	WSACleanup();
