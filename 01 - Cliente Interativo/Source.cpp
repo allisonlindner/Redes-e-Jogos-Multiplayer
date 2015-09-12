@@ -1,5 +1,6 @@
 #define _WINSOCK_DEPRECATED_NO_WARNINGS
 #define MAX_ERROR_MSG 200
+#define MAX_MSG_SIZE 2
 
 #include <WinSock2.h>
 #include <iostream>
@@ -37,6 +38,10 @@ int main() {
 	enderecoServidor.sin_port = htons(9999);
 
 	r = connect(meuSocket, (SOCKADDR *) &enderecoServidor, sizeof(enderecoServidor));
+
+	char buffer[] = { 'a', '\0' };
+
+	send(meuSocket, buffer, MAX_MSG_SIZE, NULL);
 
 	closesocket(meuSocket);
 

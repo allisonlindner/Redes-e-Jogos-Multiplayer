@@ -1,5 +1,6 @@
 #define _WINSOCK_DEPRECATED_NO_WARNINGS
 #define MAX_ERROR_MSG 200
+#define MAX_MSG_SIZE 2
 
 #include <WinSock2.h>
 #include <iostream>
@@ -59,10 +60,19 @@ int main() {
 	sockaddr_in clienteEndereco;
 	int clienteEnderecoTam = sizeof(clienteEndereco);
 
+	char buffer[MAX_MSG_SIZE];
+
 	while (true) {
 		clienteSocket = accept(principalSocket, (SOCKADDR *) &clienteEndereco, &clienteEnderecoTam);
 
-		std::cout << "Clente Conectado" << std::endl;
+		std::cout	<< "Clente: " 
+					<< inet_ntoa(clienteEndereco.sin_addr)
+					<< ":" << htons(clienteEndereco.sin_port)
+					<< std::endl;
+
+		r = recv(clienteSocket, buffer, MAX_MSG_SIZE, NULL);
+
+		std::cout << "r: " << r << " Dados: " << buffer << std::endl;
 	}
 
 	WSACleanup();
